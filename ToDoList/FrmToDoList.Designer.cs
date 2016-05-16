@@ -30,6 +30,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmToDoList));
             this.panel1 = new System.Windows.Forms.Panel();
             this.BtConfig = new System.Windows.Forms.Button();
             this.BtAdd = new System.Windows.Forms.Button();
@@ -193,6 +194,7 @@
             this.ClientSize = new System.Drawing.Size(642, 404);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "FrmToDoList";
             this.Text = "To Do List";
