@@ -48,7 +48,6 @@ namespace ToDoList
             ntNotifyIcon.ContextMenu = clickMenu;
             ntNotifyIcon.Icon = new Icon("ico.ico");
             ntNotifyIcon.Visible = true;
-            ntNotifyIcon.Click += ntNotifyIcon_Click;
             DefineColunas();
         }
 
@@ -63,21 +62,7 @@ namespace ToDoList
             this.Hide();
             e.Cancel = true;
         }
-        
-
-
-
-        void ntNotifyIcon_Click(object sender, EventArgs e)
-        {
-        //    System.Drawing.Size windowSize =
-        //SystemInformation.PrimaryMonitorMaximizedWindowSize;
-        //    System.Drawing.Point menuPoint =
-        //        new System.Drawing.Point(windowSize.Width - 180,
-        //        windowSize.Height - 5);
-        //    menuPoint = this.PointToClient(menuPoint);
-
-        //    ntNotifyIcon.ContextMenu.Show(this, menuPoint);
-        }
+     
 
         void LstTarefas_DoubleClick(object sender, EventArgs e)
         {
