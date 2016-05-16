@@ -17,7 +17,7 @@ namespace ToDoList
         {
             InitializeComponent();
             Inicializa();
-            HandleCreated += Form1_HandleCreated;
+            
             
         }
 
@@ -30,6 +30,8 @@ namespace ToDoList
             StartPosition = FormStartPosition.CenterScreen;
             BtAdd.Click += BtAdd_Click;
             BtConfig.Click += BtConfig_Click;
+            HandleCreated += Form1_HandleCreated;
+            FormClosing += FrmToDoList_Closing;
             LstTarefas.MultiSelect = false;
             LstTarefas.RowHeadersVisible = false;
             LstTarefas.AllowUserToAddRows = false;
@@ -39,11 +41,42 @@ namespace ToDoList
             LstTarefas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             LstTarefas.DoubleClick += LstTarefas_DoubleClick;
             LstTarefas.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            NtNotify.Icon = new Icon("ico.ico");
-            NtNotify.Visible = true;
+            //NotifyIcon ntNotifyIcon = new NotifyIcon();
+            MenuItem[] menuList = new MenuItem[]{new MenuItem("Exibir",(sender,e)=> Show()),
+            new MenuItem("Fechar",(sender,e)=> Application.Exit())};
+            ContextMenu clickMenu = new ContextMenu(menuList);
+            ntNotifyIcon.ContextMenu = clickMenu;
+            ntNotifyIcon.Icon = new Icon("ico.ico");
+            ntNotifyIcon.Visible = true;
+            ntNotifyIcon.Click += ntNotifyIcon_Click;
             DefineColunas();
-            NotiFy();
+        }
 
+        void FrmToDoList_Closing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.WindowsShutDown || e.CloseReason == CloseReason.ApplicationExitCall)
+            {
+                Application.Exit();
+                return;
+            }
+            this.WindowState = FormWindowState.Normal;
+            this.Hide();
+            e.Cancel = true;
+        }
+        
+
+
+
+        void ntNotifyIcon_Click(object sender, EventArgs e)
+        {
+        //    System.Drawing.Size windowSize =
+        //SystemInformation.PrimaryMonitorMaximizedWindowSize;
+        //    System.Drawing.Point menuPoint =
+        //        new System.Drawing.Point(windowSize.Width - 180,
+        //        windowSize.Height - 5);
+        //    menuPoint = this.PointToClient(menuPoint);
+
+        //    ntNotifyIcon.ContextMenu.Show(this, menuPoint);
         }
 
         void LstTarefas_DoubleClick(object sender, EventArgs e)
@@ -65,10 +98,12 @@ namespace ToDoList
         {
 
             conn = DbSessao.Instance.Conection as NpgsqlConnection;
-            IDbCommand command = conn.CreateCommand();
-            conn.Notification += conn_Notification;
-            command.CommandText = "listen notifytest";
-            command.ExecuteNonQuery();
+            using (IDbCommand command = conn.CreateCommand())
+            {
+                conn.Notification += conn_Notification;
+                command.CommandText = "listen notifytest";
+                command.ExecuteNonQuery();   
+            }
         }
         void conn_Notification(object sender, NpgsqlNotificationEventArgs e)
         {
@@ -87,6 +122,8 @@ namespace ToDoList
 
         private void VerificaProgramador(string id)
         {
+            if(string.IsNullOrEmpty(id))
+                return;
             string mac = "";
             string nome = "";
             string criador = "";
@@ -96,7 +133,7 @@ namespace ToDoList
                 command.CommandText = string.Format("SELECT todo.vcreatotodolist, "+
                                                            "pro.vnome__programador, "+
                                                            "pro.vmac___config," +
-                                                           "nstate__todolist "+
+                                                           "nstate_todolist " +
                                                     "FROM todolist as todo, "+
                                                          "programador as pro "+
                                                    "WHERE pro.nid____programador=todo.nid____programador AND "+
@@ -109,17 +146,33 @@ namespace ToDoList
                         mac = reader.IsDBNull(i) ? " " : reader.GetString(i);
                         nome = reader.GetString(reader.GetOrdinal("vnome__programador"));
                         criador = reader.GetString(reader.GetOrdinal("vcreatotodolist"));
-                        status = reader.GetInt32(reader.GetOrdinal("nstate__todolist"));
+                        status = reader.GetInt32(reader.GetOrdinal("nstate_todolist"));
                     }
                     reader.Close();
                 }
             }
             string[] macs = FuncaoGlobal.Instance.GetMac();
+            ntNotifyIcon.BalloonTipClicked += NtNotify_MouseClick;
+            ntNotifyIcon.Tag = id;
             if (macs.Contains(mac))
-                    NtNotify.ShowBalloonTip(5000, "Nova tarefa", string.Format("{0} você possui uma nova tarefa",nome), ToolTipIcon.Info);
+                ntNotifyIcon.ShowBalloonTip(5000, "Nova tarefa", string.Format("{0} você possui uma nova tarefa", nome), ToolTipIcon.Info);
             else if (macs.Contains(criador) && status!=1)
-                   NtNotify.ShowBalloonTip(5000, "Alteração status", string.Format("{0} alterou o status de uma tarefa", nome), ToolTipIcon.Info);
+                ntNotifyIcon.ShowBalloonTip(5000, "Alteração status", string.Format("{0} alterou o status de uma tarefa", nome), ToolTipIcon.Info);
             CarregaLista();
+        }
+
+
+        void NtNotify_MouseClick(object sender, EventArgs e)
+        {
+            NotifyIcon ntNotifyIcon = sender as NotifyIcon;
+            string id = ntNotifyIcon.Tag.ToString();
+            DataGridViewRow  row = LstTarefas.Rows.Cast<DataGridViewRow>()
+                .FirstOrDefault(x => ((Tarefa) x.Tag).Id.ToString().Equals(id));
+            if (row != null)
+            {
+                Tarefa tarefa = row.Tag as Tarefa;
+                Tarefa.CarregaTarefa(tarefa);
+            }
         }
 
 
@@ -180,7 +233,7 @@ namespace ToDoList
         void BtAdd_Click(object sender, EventArgs e)
         {
             Tarefa.ShowDialog();
-            //CarregaLista();
+            CarregaLista();
         }
 
         private void DefineColunas()
@@ -271,7 +324,7 @@ namespace ToDoList
                 FuncaoGlobal.Instance.CarregaProgramas(CbProjeto,this);
                 FuncaoGlobal.Instance.CarregaProgramadores(CbProgramador, this);
                 CarregaConfig();
-                //NotiFyTest();
+                NotiFy();
                 AddToCombo deleToCombo = delegate()
                 {
                     CarregaLista();
@@ -398,6 +451,11 @@ namespace ToDoList
                 }
                 return _lstColunas;
             }
+        }
+
+        private void finalizarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
    
     }

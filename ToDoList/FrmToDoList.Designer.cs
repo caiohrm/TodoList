@@ -16,6 +16,7 @@
             if (disposing && (components != null))
             {
                 components.Dispose();
+                this.ntNotifyIcon.Dispose(); //we dispose our tray icon here
             }
             base.Dispose(disposing);
         }
@@ -42,7 +43,8 @@
             this.programasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel2 = new System.Windows.Forms.Panel();
             this.LstTarefas = new System.Windows.Forms.DataGridView();
-            this.NtNotify = new System.Windows.Forms.NotifyIcon(this.components);
+            this.ntNotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.finalizarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -134,7 +136,8 @@
             // 
             this.arquivoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.usuariosToolStripMenuItem,
-            this.programasToolStripMenuItem});
+            this.programasToolStripMenuItem,
+            this.finalizarToolStripMenuItem});
             this.arquivoToolStripMenuItem.Name = "arquivoToolStripMenuItem";
             this.arquivoToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.arquivoToolStripMenuItem.Text = "Arquivo";
@@ -171,10 +174,17 @@
             this.LstTarefas.Size = new System.Drawing.Size(642, 321);
             this.LstTarefas.TabIndex = 0;
             // 
-            // NtNotify
+            // ntNotifyIcon
             // 
-            this.NtNotify.Text = "notifyIcon2";
-            this.NtNotify.Visible = true;
+            this.ntNotifyIcon.Text = "TodoList";
+            this.ntNotifyIcon.Visible = true;
+            // 
+            // finalizarToolStripMenuItem
+            // 
+            this.finalizarToolStripMenuItem.Name = "finalizarToolStripMenuItem";
+            this.finalizarToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.finalizarToolStripMenuItem.Text = "Finalizar";
+            this.finalizarToolStripMenuItem.Click += new System.EventHandler(this.finalizarToolStripMenuItem_Click);
             // 
             // FrmToDoList
             // 
@@ -212,7 +222,8 @@
         private System.Windows.Forms.DataGridView LstTarefas;
         private System.Windows.Forms.Button BtConfig;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
-        private System.Windows.Forms.NotifyIcon NtNotify;
+        private System.Windows.Forms.NotifyIcon ntNotifyIcon;
+        private System.Windows.Forms.ToolStripMenuItem finalizarToolStripMenuItem;
     }
 }
 
