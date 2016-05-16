@@ -39,11 +39,11 @@ namespace ToDoList
             LstTarefas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             LstTarefas.DoubleClick += LstTarefas_DoubleClick;
             LstTarefas.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            Closing += FrmToDoList_Closing;
             NtNotify.Icon = new Icon("ico.ico");
             NtNotify.Visible = true;
             DefineColunas();
-           
+            NotiFy();
+
         }
 
         void LstTarefas_DoubleClick(object sender, EventArgs e)
@@ -55,18 +55,13 @@ namespace ToDoList
             
         }
 
-        void FrmToDoList_Closing(object sender, CancelEventArgs e)
-        {
-            //SalvaConfig();
-        }
-
         private void BtConfig_Click(object sender, EventArgs e)
         {
             SalvaConfig();
         }
         static System.Threading.Timer timer;
         static NpgsqlConnection conn; 
-        private void NotiFyTest()
+        private void NotiFy()
         {
 
             conn = DbSessao.Instance.Conection as NpgsqlConnection;
