@@ -107,7 +107,7 @@ namespace ToDoList
                         TxTitulo.Text,
                         TxDescricao.Text,
                         FuncaoGlobal.Instance.GetMac().FirstOrDefault(),
-                        DtPrazo.Value.ToString("dd/MM/yyyy HH:mm:ss"),
+                        DtPrazo.Value.ToString("dd dd/MM/yyyy HH:mm:ss"),
                         "1");
                 }
                 else
@@ -125,7 +125,7 @@ namespace ToDoList
                         projeto.Id,
                         TxTitulo.Text,
                         TxDescricao.Text,
-                        DtPrazo.Value.ToString("dd/mm/yyyy HH:mm:ss"),
+                        DtPrazo.Value.ToString("dd/MM/yyyy HH:mm:ss"),
                         status.Indice,
                         _tarefa.Id);
                 }
