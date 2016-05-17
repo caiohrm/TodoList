@@ -78,9 +78,9 @@ namespace ToDoList
             }
             AddToCombo delegateCombo = delegate()
             {
-                CbStatus.Items.Clear();
+                //CbStatus.Items.Clear();
                 CbStatus.Items.AddRange(lstProgramador.ToArray());
-                CbStatus.SelectedIndex = 0;
+                CbStatus.SelectedIndex = 1;
                 return null;
             };
             control.Invoke(delegateCombo);

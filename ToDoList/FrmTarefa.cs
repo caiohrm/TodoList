@@ -107,7 +107,7 @@ namespace ToDoList
                         TxTitulo.Text,
                         TxDescricao.Text,
                         FuncaoGlobal.Instance.GetMac().FirstOrDefault(),
-                        DtPrazo.Value.ToString("dd dd/MM/yyyy HH:mm:ss"),
+                        DtPrazo.Value.ToString("dd/MM/yyyy HH:mm:ss"),
                         "1");
                 }
                 else
@@ -157,6 +157,7 @@ namespace ToDoList
             CbStatus.SelectedItem = CbStatus.Items.Cast<Status>().FirstOrDefault(x => x.Indice == _tarefa.Status);
             CbProjeto.SelectedItem = CbProjeto.Items.Cast<Projetos>().FirstOrDefault(x => x.Id == _tarefa.IdPrograma);
             CbProgramador.SelectedItem = CbProgramador.Items.Cast<Programador>().FirstOrDefault(x => x.Id == _tarefa.IdProgramador);
+            DtPrazo.Value = _tarefa.Prazo;
             TxTitulo.Text = _tarefa.Titulo;
             TxDescricao.Text = _tarefa.DescricaoAcao;
 

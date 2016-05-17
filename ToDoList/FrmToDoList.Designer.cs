@@ -42,10 +42,12 @@
             this.arquivoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.usuariosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.programasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.finalizarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel2 = new System.Windows.Forms.Panel();
             this.LstTarefas = new System.Windows.Forms.DataGridView();
             this.ntNotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
-            this.finalizarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label3 = new System.Windows.Forms.Label();
+            this.CbStatus = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -54,6 +56,8 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.label3);
+            this.panel1.Controls.Add(this.CbStatus);
             this.panel1.Controls.Add(this.BtConfig);
             this.panel1.Controls.Add(this.BtAdd);
             this.panel1.Controls.Add(this.label2);
@@ -91,7 +95,7 @@
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(311, 38);
+            this.label2.Location = new System.Drawing.Point(160, 38);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(67, 13);
             this.label2.TabIndex = 3;
@@ -101,9 +105,9 @@
             // 
             this.CbProgramador.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.CbProgramador.FormattingEnabled = true;
-            this.CbProgramador.Location = new System.Drawing.Point(314, 54);
+            this.CbProgramador.Location = new System.Drawing.Point(163, 54);
             this.CbProgramador.Name = "CbProgramador";
-            this.CbProgramador.Size = new System.Drawing.Size(170, 21);
+            this.CbProgramador.Size = new System.Drawing.Size(133, 21);
             this.CbProgramador.TabIndex = 2;
             // 
             // label1
@@ -120,7 +124,7 @@
             this.CbProjeto.FormattingEnabled = true;
             this.CbProjeto.Location = new System.Drawing.Point(3, 54);
             this.CbProjeto.Name = "CbProjeto";
-            this.CbProjeto.Size = new System.Drawing.Size(170, 21);
+            this.CbProjeto.Size = new System.Drawing.Size(132, 21);
             this.CbProjeto.TabIndex = 0;
             // 
             // menuStrip1
@@ -157,6 +161,13 @@
             this.programasToolStripMenuItem.Text = "Programas";
             this.programasToolStripMenuItem.Click += new System.EventHandler(this.programasToolStripMenuItem_Click);
             // 
+            // finalizarToolStripMenuItem
+            // 
+            this.finalizarToolStripMenuItem.Name = "finalizarToolStripMenuItem";
+            this.finalizarToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.finalizarToolStripMenuItem.Text = "Finalizar";
+            this.finalizarToolStripMenuItem.Click += new System.EventHandler(this.finalizarToolStripMenuItem_Click);
+            // 
             // panel2
             // 
             this.panel2.Controls.Add(this.LstTarefas);
@@ -180,12 +191,24 @@
             this.ntNotifyIcon.Text = "TodoList";
             this.ntNotifyIcon.Visible = true;
             // 
-            // finalizarToolStripMenuItem
+            // label3
             // 
-            this.finalizarToolStripMenuItem.Name = "finalizarToolStripMenuItem";
-            this.finalizarToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.finalizarToolStripMenuItem.Text = "Finalizar";
-            this.finalizarToolStripMenuItem.Click += new System.EventHandler(this.finalizarToolStripMenuItem_Click);
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(327, 38);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(49, 13);
+            this.label3.TabIndex = 13;
+            this.label3.Text = "Situação";
+            // 
+            // CbStatus
+            // 
+            this.CbStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.CbStatus.FormattingEnabled = true;
+            this.CbStatus.Location = new System.Drawing.Point(330, 54);
+            this.CbStatus.Name = "CbStatus";
+            this.CbStatus.Size = new System.Drawing.Size(133, 21);
+            this.CbStatus.TabIndex = 12;
             // 
             // FrmToDoList
             // 
@@ -226,6 +249,8 @@
         private System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.NotifyIcon ntNotifyIcon;
         private System.Windows.Forms.ToolStripMenuItem finalizarToolStripMenuItem;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox CbStatus;
     }
 }
 

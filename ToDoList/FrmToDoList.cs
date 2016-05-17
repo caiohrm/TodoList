@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net.NetworkInformation;
 using System.Threading;
 using System.Windows.Forms;
@@ -17,8 +18,6 @@ namespace ToDoList
         {
             InitializeComponent();
             Inicializa();
-            
-            
         }
 
         private delegate object AddToCombo();
@@ -27,11 +26,13 @@ namespace ToDoList
         {
             CbProgramador.DropDownStyle = ComboBoxStyle.DropDownList;
             CbProjeto.DropDownStyle = ComboBoxStyle.DropDownList;
+            CbStatus.DropDownStyle = ComboBoxStyle.DropDownList;
             StartPosition = FormStartPosition.CenterScreen;
             BtAdd.Click += BtAdd_Click;
             BtConfig.Click += BtConfig_Click;
             HandleCreated += Form1_HandleCreated;
             FormClosing += FrmToDoList_Closing;
+            LstTarefas.ReadOnly = true;
             LstTarefas.MultiSelect = false;
             LstTarefas.RowHeadersVisible = false;
             LstTarefas.AllowUserToAddRows = false;
@@ -46,7 +47,7 @@ namespace ToDoList
             new MenuItem("Fechar",(sender,e)=> Application.Exit())};
             ContextMenu clickMenu = new ContextMenu(menuList);
             ntNotifyIcon.ContextMenu = clickMenu;
-            ntNotifyIcon.Icon = new Icon("ico.ico");
+            ntNotifyIcon.Icon = new Icon("send.ico");
             ntNotifyIcon.Visible = true;
             DefineColunas();
         }
@@ -241,28 +242,35 @@ namespace ToDoList
             LstTarefas.Rows.Clear();
             Projetos projetos = CbProjeto.SelectedItem as Projetos;
             Programador programador = CbProgramador.SelectedItem as Programador;
-            if (projetos == null || programador == null)
+            Status status = CbStatus.SelectedItem as Status;
+            if (projetos == null || programador == null || status == null)
                 return;
             using (IDbCommand command = DbSessao.Instance.CreateComand())
             {
-                command.CommandText = string.Format("SELECT nid____todolist, " +
-                                                            "todo.nid____programador, " +
-                                                            "todo.nid____programa, " +
-                                                            "vtitulotodolist,"+
-                                                            "vdescritodolist, " +
-                                                            "vnome____programa, " +
-                                                            "vnome__programador," +
-                                                            "dprazo_todolist," +
-                                                            "nstate_todolist " +
-                                                     "FROM todolist AS todo, " +
-                                                            "programador AS pro, " +
-                                                            "programa AS grama " +
-                                                    "WHERE (0={0} or todo.nid____programador = {0}) AND  " +
-                                                            "(0={1} or todo.nid____programa = {1}) AND " +
-                                                            "pro.nid____programador = todo.nid____programador AND " +
-                                                            "todo.nid____programa=grama.nid____programa " +
-                                                            "order by nid____programador", programador.Id,
-                    projetos.Id);
+                command.CommandText = string.Format("SELECT nid____todolist,"+
+	                                                       "todo.nid____programador, "+
+	                                                       "todo.nid____programa, "+
+	                                                       "vtitulotodolist,"+
+	                                                       "vdescritodolist, "+
+	                                                       "vnome____programa, "+
+	                                                       "vnome__programador,"+
+	                                                       "dprazo_todolist,"+
+	                                                       "stu.vdescristatus,"+
+	                                                       "nstate_todolist " +
+                                                    "FROM todolist AS todo, "+
+				                                            "programador AS pro, "+
+				                                            "programa AS grama,"+
+				                                            "status AS stu "+
+			                                       "WHERE "+
+			                                            "(0={0} or todo.nid____programador = {0}) AND  " +
+                                                        "(0={1} or todo.nid____programa = {1}) AND " +
+                                                        "(0={2} or todo.nstate_todolist = {2}) AND "+
+			                                            "pro.nid____programador = todo.nid____programador AND "+
+			                                            "todo.nid____programa=grama.nid____programa AND "+
+			                                            "todo.nstate_todolist=stu.nid____status "+
+			                                            "order by nid____programador", programador.Id,
+                                                                                        projetos.Id,
+                                                                                        status.Indice);
                 using (IDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
@@ -276,7 +284,8 @@ namespace ToDoList
                             reader.GetString(reader.GetOrdinal("vnome__programador")),
                             reader.GetDateTime(reader.GetOrdinal("dprazo_todolist")),
                             reader.GetString(reader.GetOrdinal("vtitulotodolist")),
-                            reader.GetInt32(reader.GetOrdinal("nstate_todolist"))
+                            reader.GetInt32(reader.GetOrdinal("nstate_todolist")),
+                            reader.GetString(reader.GetOrdinal("vdescristatus"))
                             );
 
                         DataGridViewRow row = new DataGridViewRow();
@@ -285,6 +294,7 @@ namespace ToDoList
                             tarefa.NomeProgramador,
                             tarefa.NomePrograma,
                             tarefa.Titulo,
+                            tarefa.StatusDescricao,
                             tarefa.Prazo.ToString()
                         });
                         row.Tag = tarefa;
@@ -303,11 +313,12 @@ namespace ToDoList
                 MessageBox.Show("Conexão banco de dados falhou");
                 return;
             }
-            
+            CbStatus.Items.Add(new Status(0, "[SELECIONAR]"));
             Thread thread = new Thread(delegate()
             {
                 FuncaoGlobal.Instance.CarregaProgramas(CbProjeto,this);
                 FuncaoGlobal.Instance.CarregaProgramadores(CbProgramador, this);
+                FuncaoGlobal.Instance.CarregaStatus(CbStatus, this);
                 CarregaConfig();
                 NotiFy();
                 AddToCombo deleToCombo = delegate()
@@ -318,6 +329,7 @@ namespace ToDoList
                 Invoke(deleToCombo);
                 CbProgramador.SelectedIndexChanged += CbProgramador_SelectedIndexChanged;
                 CbProjeto.SelectedIndexChanged += CbProgramador_SelectedIndexChanged;
+                CbStatus.SelectedIndexChanged += CbProgramador_SelectedIndexChanged;
             });
             thread.Start();
         }
@@ -419,6 +431,17 @@ namespace ToDoList
                         EhInterno = false,
                         Tamanho = 170,
                         Titulo = "Descricao",
+                    };
+                    _lstColunas.Add(col);
+                    col = new BasicoColuna()
+                    {
+                        Descricao = "Status",
+                        Identificador = "nstate_todolist",
+                        IsKey = false,
+                        EhVisivel = true,
+                        EhInterno = false,
+                        Tamanho = 100,
+                        Titulo = "Status",
                     };
                     _lstColunas.Add(col);
                     col = new BasicoColuna()

@@ -9,7 +9,7 @@ namespace ToDoList
     public class Tarefa
     {
         public Tarefa(int id, int idProgramador, int idPrograma, string descricaoAcao, string nomePrograma,
-            string nomeProgramador, DateTime prazo, string titulo, int status)
+            string nomeProgramador, DateTime prazo, string titulo, int status,string statusdescricao)
         {
             _id = id;
             _idProgramador = idProgramador;
@@ -20,6 +20,7 @@ namespace ToDoList
             _prazo = prazo;
             _titulo = titulo;
             _status = status;
+            _statusDescricao = statusdescricao;
         }
 
         private string _titulo = "";
@@ -37,6 +38,8 @@ namespace ToDoList
         private string _nomeProgramador = "";
 
         private int _status = -1;
+
+        private string _statusDescricao = "";
         
         private DateTime _prazo = DateTime.MinValue;
 
@@ -93,6 +96,12 @@ namespace ToDoList
         {
             get { return _status; }
             set { _status = value; }
+        }
+
+        public string StatusDescricao
+        {
+            get { return _statusDescricao; }
+            set { _statusDescricao = value; }
         }
     }
 }
