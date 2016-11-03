@@ -78,7 +78,7 @@ namespace ToDoList
                 MessageBox.Show("Defina uma descrição para a tarefa");
                 return;
             }
-            if (_tarefa == null && DtPrazo.Value > DateTime.Now || _tarefa != null && DtPrazo.Value < _tarefa.Prazo)
+            if (_tarefa == null && DtPrazo.Value < DateTime.Now || _tarefa != null && DtPrazo.Value < _tarefa.Prazo)
             {
                 MessageBox.Show("Defina um prazo válido");
                 return;
