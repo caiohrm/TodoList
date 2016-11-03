@@ -12,3 +12,16 @@ c:\users\caio\documents\visual studio 2013\Projects\ToDoList\ToDoList\obj\Debug\
 c:\users\caio\documents\visual studio 2013\Projects\ToDoList\ToDoList\obj\Debug\ToDoList.FrmTarefa.resources
 C:\Users\caio\Documents\Visual Studio 2013\Projects\ToDoList\ToDoList\bin\Debug\Npgsql.xml
 C:\Users\caio\Documents\Visual Studio 2013\Projects\ToDoList\ToDoList\bin\Debug\Mono.Security.dll
+C:\Users\Caio\Documents\Visual Studio 2015\Projects\ToDoList\ToDoList\bin\Debug\ToDoList.exe.config
+C:\Users\Caio\Documents\Visual Studio 2015\Projects\ToDoList\ToDoList\obj\Debug\ToDoList.exe
+C:\Users\Caio\Documents\Visual Studio 2015\Projects\ToDoList\ToDoList\obj\Debug\ToDoList.pdb
+C:\Users\Caio\Documents\Visual Studio 2015\Projects\ToDoList\ToDoList\bin\Debug\ToDoList.exe
+C:\Users\Caio\Documents\Visual Studio 2015\Projects\ToDoList\ToDoList\bin\Debug\ToDoList.pdb
+C:\Users\Caio\Documents\Visual Studio 2015\Projects\ToDoList\ToDoList\bin\Debug\Npgsql.dll
+C:\Users\Caio\Documents\Visual Studio 2015\Projects\ToDoList\ToDoList\bin\Debug\Npgsql.xml
+C:\Users\Caio\Documents\Visual Studio 2015\Projects\ToDoList\ToDoList\obj\Debug\ToDoList.csprojResolveAssemblyReference.cache
+C:\Users\Caio\Documents\Visual Studio 2015\Projects\ToDoList\ToDoList\obj\Debug\ToDoList.FrmTarefa.resources
+C:\Users\Caio\Documents\Visual Studio 2015\Projects\ToDoList\ToDoList\obj\Debug\ToDoList.FrmToDoList.resources
+C:\Users\Caio\Documents\Visual Studio 2015\Projects\ToDoList\ToDoList\obj\Debug\ToDoList.Properties.Resources.resources
+C:\Users\Caio\Documents\Visual Studio 2015\Projects\ToDoList\ToDoList\obj\Debug\ToDoList.FrmCadastro.resources
+C:\Users\Caio\Documents\Visual Studio 2015\Projects\ToDoList\ToDoList\obj\Debug\ToDoList.csproj.GenerateResource.Cache

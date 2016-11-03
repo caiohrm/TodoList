@@ -78,7 +78,7 @@ namespace ToDoList
                 MessageBox.Show("Defina uma descrição para a tarefa");
                 return;
             }
-            if (DtPrazo.Value < DateTime.Now && _tarefa != null)
+            if (_tarefa == null && DtPrazo.Value > DateTime.Now || _tarefa != null && DtPrazo.Value < _tarefa.Prazo)
             {
                 MessageBox.Show("Defina um prazo válido");
                 return;
@@ -165,6 +165,7 @@ namespace ToDoList
         private delegate object AddToCombo();
         void FrmTarefa_HandleCreated(object sender, EventArgs e)
         {
+            CbStatus.Items.Clear();
             Thread thread = new Thread(delegate()
             {
                 FuncaoGlobal.Instance.CarregaProgramas(CbProjeto, this);
