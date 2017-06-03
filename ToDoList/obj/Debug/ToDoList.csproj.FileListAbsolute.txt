@@ -25,3 +25,6 @@ C:\Users\Caio\Documents\Visual Studio 2015\Projects\ToDoList\ToDoList\obj\Debug\
 C:\Users\Caio\Documents\Visual Studio 2015\Projects\ToDoList\ToDoList\obj\Debug\ToDoList.Properties.Resources.resources
 C:\Users\Caio\Documents\Visual Studio 2015\Projects\ToDoList\ToDoList\obj\Debug\ToDoList.FrmCadastro.resources
 C:\Users\Caio\Documents\Visual Studio 2015\Projects\ToDoList\ToDoList\obj\Debug\ToDoList.csproj.GenerateResource.Cache
+C:\Users\Nilton\Documents\GitHub\TodoList\ToDoList\bin\Debug\ToDoList.exe.config
+C:\Users\Nilton\Documents\GitHub\TodoList\ToDoList\obj\Debug\ToDoList.exe
+C:\Users\Nilton\Documents\GitHub\TodoList\ToDoList\obj\Debug\ToDoList.pdb

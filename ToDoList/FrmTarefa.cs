@@ -18,6 +18,7 @@ namespace ToDoList
             Inicializa();
         }
 
+
         void FrmTarefa_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Reinicializa();
